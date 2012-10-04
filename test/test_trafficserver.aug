@@ -16,15 +16,28 @@ module Test_trafficserver =
 	}
 
 	
-  let _ = print_regexp (lens_ctype Trafficserver_plugins.plugins_lns)
+  let _ = print_regexp (lens_ctype Trafficserver_plugin.plugin_lns)
   let _ = print_endline ""
 
-  let pluginstring = "/foo/bar.so I am an \"arg\" # this is the foobar plugin
+  let plugintring = "/foo/bar.so I am an \"arg\" # this is the foobar plugin
 "
 
-  test Trafficserver_plugins.plugins_lns get pluginstring = 
-	{ "1" = "/foo/bar.so"
+  test Trafficserver_plugin.plugin_lns get plugintring = 
+	{ "plugin" = "/foo/bar.so"
 		{ "args" = "I am an \"arg\"" }
 		{ "#comment" = "this is the foobar plugin" }
 	}
+
+  let _ = print_regexp (lens_ctype Trafficserver_remap.remap_lns)
+  let _ = print_endline ""
+
+  let remapstring = "map http://localhost/stat/ http://{stat} @src_ip=127.0.0.1 @action=allow
+"
+
+  test Trafficserver_remap.remap_lns get remapstring = 
+  { "map" = "http://localhost/stat/"
+    {"replacement" = "http://{stat}"}
+    {"@src_ip" = "127.0.0.1"}
+    {"@action" = "allow"}
+  }
 
