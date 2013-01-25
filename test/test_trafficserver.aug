@@ -41,3 +41,27 @@ module Test_trafficserver =
     {"@action" = "allow"}
   }
 
+  let _ = print_regexp (lens_ctype Trafficserver_records.records_lns)
+  let _ = print_endline ""
+
+  test Trafficserver_records.records_lns get "CONFIG proxy.config.net.sock_send_buffer_size_in INT 262144
+CONFIG proxy.config.net.sock_recv_buffer_size_in INT 0
+CONFIG proxy.config.net.sock_send_buffer_size_out INT 0
+CONFIG proxy.config.net.sock_recv_buffer_size_out INT 0\n" =
+  { "proxy.config.net.sock_send_buffer_size_in" = "262144"
+    { "type" = "CONFIG" }
+    { "value_type" = "INT" }
+  }
+  { "proxy.config.net.sock_recv_buffer_size_in" = "0"
+    { "type" = "CONFIG" }
+    { "value_type" = "INT" }
+  }
+  { "proxy.config.net.sock_send_buffer_size_out" = "0"
+    { "type" = "CONFIG" }
+    { "value_type" = "INT" }
+  }
+  { "proxy.config.net.sock_recv_buffer_size_out" = "0"
+    { "type" = "CONFIG" }
+    { "value_type" = "INT" }
+  }
+
